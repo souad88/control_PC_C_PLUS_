@@ -12,6 +12,7 @@
 #include <string.h>
 #include <string>
 #include <syslog.h>
+#include<array>
 using namespace std;
 class server_
 {
@@ -24,16 +25,17 @@ class server_
        char service[NI_MAXSERV];   // Service (i.e. port) the client is connect on
        int clientSocket;
        string choosed;
+       //char buf[4096];
        char buf[4096];
        int bytesReceived;
-       comm_is_ *command_is; //commands to call system applications 
+       comm_is_ command_is; //commands to call system applications 
        server_();
        void creat_socket();
-       void bind_socket(int port_,const char* ip_);
+       void bind_socket(int port_,char ip_[]);
        void listen_connection();
        void start_connection();
        void close_listening();
-       void send_to_client(const char*);
+       void send_to_client(char[]);
        void accept_client(); 
        ~server_();       
 };
