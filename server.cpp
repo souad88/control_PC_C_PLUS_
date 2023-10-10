@@ -9,8 +9,9 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <string.h>
-#include <string>
 #include <syslog.h>
+#include <string>
+#include <array>
 using namespace std;
 server_::server_(){}
 void server_::creat_socket()
@@ -23,7 +24,7 @@ void server_::creat_socket()
        }
     
 }
-void server_::bind_socket(int port_,const char* ip_)
+void server_::bind_socket(int port_,char ip_[])
 {
    
      hint.sin_family = AF_INET;
@@ -58,7 +59,7 @@ void server_::close_listening()
 {
      close(listening);
 }
-void server_::send_to_client(const char *message)
+void server_::send_to_client(char message[])
 {
     send(clientSocket,message,strlen(message),0);
 }
@@ -72,7 +73,7 @@ void server_::accept_client()
         memset(buf, 0, 4096);
         // Wait for client to send data
         bytesReceived = recv(clientSocket, buf, 4096, 0);
-        choosed=buf;
+        //choosed=buf;
         if (bytesReceived == -1)
         {
             cerr << "Error in recv(). Quitting" << endl;
@@ -87,35 +88,33 @@ void server_::accept_client()
         
         else
         {
-              
+           //string f= string str(begin(buf), end(buf));  
+            //
             cout << string(buf, 0, bytesReceived) << endl; 
             pid = fork();//fork for working two process together
             if(pid==0)
             {
-              if(choosed=="fire")
+              if(buf=="fire")
               {
-                    command_is->open_firefox();
+                    command_is.open_firefox();
                     //system("firefox");
               }
-             if(choosed=="term")
+             if(buf=="term")
               {
-                    command_is->open_terminal();
+                    command_is.open_terminal();
               }
-             if(choosed=="calc")
+             if(buf=="calc")
               {
-                 command_is->open_calculator();
+                 command_is.open_calculator();
               }
             }
                
         }
       
     }
-
+    command_is.~comm_is_();
 }
 server_::~server_()
 {
-     close(clientSocket); //close socket
-     command_is->~comm_is_(); //delete pointer
-     delete command_is;
-     
+     close(clientSocket); //close socket     
 }
