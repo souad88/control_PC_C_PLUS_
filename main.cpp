@@ -8,14 +8,14 @@ int main()
                                 "1-terminal.\n"
                                 "2-calulator.\n"
                                 "3-firefox.\n";
-    server_ server_;
-    server_.creat_socket();
-    server_.bind_socket(3389,"0.0.0.0");//for Remote connection ,TCP Protocol
-    server_.listen_connection();
-    server_.start_connection();
-    server_.close_listening();
-    server_.send_to_client(menu_);
-    server_.accept_client(); 
-    server_.~server_(); 
+    server_ sock;
+    sock.creat_socket();
+    sock.bind_socket(3389,"0.0.0.0");//for Remote connection ,TCP Protocol
+    sock.listen_connection();
+    sock.start_connection();
+    sock.close_listening();
+    sock.send_to_client(menu_);
+    sock.accept_client(); 
+    sock.~server_(); 
     return 0;
 }
