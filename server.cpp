@@ -1,6 +1,7 @@
 #include "server.hpp"
 #include "command.hpp"
 #include <iostream>
+#include <sched.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -70,9 +71,10 @@ void server_::accept_client()
     {
         pid_t pid;
        
-        memset(buf, 0, 4096);
+        memset(buf, 0,4096);
         // Wait for client to send data
-        bytesReceived = recv(clientSocket, buf, 4096, 0);
+        
+        bytesReceived = recv(clientSocket,buf, 4096, 0);
         //choosed=buf;
         if (bytesReceived == -1)
         {
@@ -88,31 +90,37 @@ void server_::accept_client()
         
         else
         {
-           //string f= string str(begin(buf), end(buf));  
-            //
-            cout << string(buf, 0, bytesReceived) << endl; 
+            string choosed=buf;
+            //cout<<choosed<<endl;
+            cout<<choosed.substr(0,4)<<endl; //substring to take 4 char only from the buffer and compare it
+            //cout<<buf[0]<<endl;
             pid = fork();//fork for working two process together
             if(pid==0)
             {
-              if(buf=="fire")
+              cout<<"pid created"<<endl;
+              //if(buf[0]=='f'){}
+              if(choosed.substr(0,4)=="fire")
               {
-                    command_is.open_firefox();
-                    //system("firefox");
+                    
+                  command_is.open_firefox();  //system("firefox");
               }
-             if(buf=="term")
+             //if(buf[0]=='t'){} 
+             if(choosed.substr(0,4)=="term")
               {
                     command_is.open_terminal();
               }
-             if(buf=="calc")
+              //if(buf[0]=='c'){}
+             if(choosed.substr(0,4)=="calc")
               {
-                 command_is.open_calculator();
-              }
-            }
-               
-        }
+                   command_is.open_calculator();
+              }  
+            }    
+              
+        }       
+        
       
     }
-    command_is.~comm_is_();
+     command_is.~comm_is_();
 }
 server_::~server_()
 {

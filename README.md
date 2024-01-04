@@ -35,3 +35,12 @@ Start Project :
 For Socket_programmming :
   -I recommend Sloan youtube channel : 
     https://www.youtube.com/watch?v=cNdlrbZSkyQ&t=0s
+---------------------------------------
+Some Updates :
+  -I changed the way of comparing between buffer value and any string :
+     EX: The old one was : if(buf=="fire"){//commands}; but this method gave me
+          a bad issue. the compiler take the complete size of the buffer buf[4096]
+          with empty spaces also. 
+
+   -The new one , is to take the value in the buffer and store it in a string , then use C++ substring to take only the number of character to compare between it and the choosed word by the User :
+    EX:  if(choosed.substr(0,4)=="fire"){//commands}; //substring to take 4 char only from the  buffer and compare it       
