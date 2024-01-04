@@ -19,7 +19,7 @@ Pre-requests:
 Start Project :
   -Clone Project Repository.
   -Compile Server Program in VS terminal:
-    $g++ main.cpp server_.cpp -o server_ -std=c++11
+    $g++ main.cpp server.cpp command.cpp -o server_ -std=c++11
     $./server_
   -test client on your terminal : Telnet 0.0.0.0 8080.
   -open Tcp/Udp Server&Client : 
